@@ -1,0 +1,20 @@
+#system
+.DS_Store
+.idea/
+
+# Python:
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+upload
+build
+logs
+migrations
+uploads
+
+# My configurations:
+db.ini
+deploy_key_rsa
+dump.rdb

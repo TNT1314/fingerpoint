@@ -1,2 +1,3 @@
-# fingerpoint
-fingerpoint test
+/**
+* 该项目用于指纹机测试
+*/
