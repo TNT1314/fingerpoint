@@ -7,5 +7,6 @@ from webapi.views import *
 urlpatterns = [
     url(r'^html$', finger_point_test_html_01),
     url(r'^finger_01$', finger_point_test_api_01),
+    url(r'^finger_02$', finger_point_test_api_02),
 
 ]
