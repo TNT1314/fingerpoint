@@ -130,14 +130,40 @@ def finger_point_test_api_02(request):
 
     response_data = json.dumps(rsp_data, ensure_ascii=False, indent=2)
 
-    back_body = """
-        <!DOCTYPE html>
-        <html lang='en'>
-            <head>
-                <meta charset='UTF-8'>
-            </head>
-            <body>{}</body>
-        </html>
-    """.format(response_data)
+    return Response(response_data)
 
-    return Response(back_body)
+
+@api_view(['GET', 'POST'])
+@renderer_classes((StaticHTMLRenderer,))
+def finger_point_test_file_list(request):
+    """
+        Finger image test
+    """
+
+    rsp_data = OrderedDict()
+    rsp_data['data'] = OrderedDict()
+
+    upload_path = os.path.join(u"{}/upload".format(settings.BASE_DIR))
+
+    if not os.path.exists(upload_path):
+        os.makedirs(upload_path)
+
+    upload_files = os.listdir(upload_path)
+
+    upload_files_list = [
+        u"""
+            <div>
+                <strong>{0}</strong>. <a href="/media/{1}">{1}</a><br/>
+            </div>
+        """.format((idex+1), filename) for idex, filename in enumerate(upload_files)]
+
+    html_list = "".join(upload_files_list)
+    html_text = u"""
+        <div>
+            <div>
+                <h4>文件列表</h4>
+                {}
+            </div>
+        </div>
+    """.format(html_list)
+    return Response(html_text)
