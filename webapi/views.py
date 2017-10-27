@@ -40,7 +40,7 @@ def finger_point_test_api_01(request):
     """
 
     rsp_data = dict()
-    rsp_data['data'] = OrderedDict()
+
     req_data = request.data if request.data else request.query_params
 
     if req_data:
@@ -50,29 +50,38 @@ def finger_point_test_api_01(request):
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
 
-            image_file = req_data['file']
+            image_file = req_data['image'] if 'image' in req_data else None
             if image_file:
                 # 打开特定的文件进行二进制的写操作
                 destination = open(u"{}/{}".format(upload_path, image_file.name), 'wb+')
                 for chunk in image_file.chunks():  # 分块写入文件
                     destination.write(chunk)
                 destination.close()
-                rsp_data['data']['file_url'] = u"/media/{}".format(image_file.name)
+
+            self_data = copy.deepcopy(req_data)
+            del self_data['image']
 
             rsp_data['code'] = '10000'
             rsp_data['mesage'] = u'Upload Success.'
-            rsp_data['data'] = rsp_data
             rsp_data['chinese_test'] = u'中文测试'
+            rsp_data['data'] = OrderedDict()
+            rsp_data['data'] = self_data
+            rsp_data['data']['file_url'] = u"/media/{}".format(image_file.name)
+
         else:
+
             rsp_data['code'] = '10001'
             rsp_data['mesage'] = 'Upload Fail.'
-            rsp_data['data'] = copy.deepcopy(req_data)
             rsp_data['chinese_test'] = u'中文测试'
+            rsp_data['data'] = OrderedDict()
+            rsp_data['data'] = copy.deepcopy(req_data)
     else:
         rsp_data['code'] = u'10001'
         rsp_data['mesage'] = 'Upload Error.diviceid error.'
-        rsp_data['data'] = copy.deepcopy(req_data)
         rsp_data['chinese_test'] = u'中文测试'
+        rsp_data['data'] = OrderedDict()
+        rsp_data['data'] = copy.deepcopy(req_data)
+
     return Response(rsp_data)
 
 
@@ -98,13 +107,13 @@ def finger_point_test_api_02(request):
     req_data = request.data if request.data else request.query_params
 
     if req_data:
-        if req_data['deviceid'] == '110102006229':
+        if 'deviceid' in req_data:
             upload_path = os.path.join(u"{}/upload".format(settings.BASE_DIR))
 
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
 
-            image_file = req_data['file']
+            image_file = req_data['file'] if 'image' in req_data else None
             if image_file:
                 # 打开特定的文件进行二进制的写操作
                 destination = open(u"{}/{}".format(upload_path, image_file.name), 'wb+')
@@ -115,18 +124,19 @@ def finger_point_test_api_02(request):
 
             rsp_data['code'] = '10000'
             rsp_data['mesage'] = 'Upload Success.'
-            rsp_data['data'] = rsp_data
-            rsp_data['chinese_test'] = '中文测试'
+            rsp_data['data']['request_data'] = dict()
+            rsp_data['data']['request_data'] = copy.deepcopy(req_data)
+            rsp_data['chinese_test'] = u'中文测试'
         else:
             rsp_data['code'] = '10001'
             rsp_data['mesage'] = 'Upload Fail.'
             rsp_data['data'] = copy.deepcopy(req_data)
-            rsp_data['chinese_test'] = '中文测试'
+            rsp_data['chinese_test'] = u'中文测试'
     else:
         rsp_data['code'] = '10001'
         rsp_data['mesage'] = 'Upload Error.diviceid error.'
         rsp_data['data'] = copy.deepcopy(req_data)
-        rsp_data['chinese_test'] = '中文测试'
+        rsp_data['chinese_test'] = u'中文测试'
 
     response_data = json.dumps(rsp_data, ensure_ascii=False, indent=2)
 
