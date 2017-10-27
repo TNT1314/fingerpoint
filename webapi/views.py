@@ -39,7 +39,7 @@ def finger_point_test_api_01(request):
             }
     """
 
-    rsp_data = dict()
+    rsp_data = OrderedDict()
 
     req_data = request.data if request.data else request.query_params
 
@@ -103,7 +103,7 @@ def finger_point_test_api_02(request):
     """
 
     rsp_data = OrderedDict()
-    rsp_data['data'] = OrderedDict()
+
     req_data = request.data if request.data else request.query_params
 
     if req_data:
@@ -124,19 +124,26 @@ def finger_point_test_api_02(request):
 
             rsp_data['code'] = '10000'
             rsp_data['mesage'] = 'Upload Success.'
+            rsp_data['chinese_test'] = u'中文测试'
+
+            rsp_data['data'] = OrderedDict()
             rsp_data['data']['request_data'] = dict()
             rsp_data['data']['request_data'] = copy.deepcopy(req_data)
-            rsp_data['chinese_test'] = u'中文测试'
+
         else:
             rsp_data['code'] = '10001'
             rsp_data['mesage'] = 'Upload Fail.'
-            rsp_data['data'] = copy.deepcopy(req_data)
             rsp_data['chinese_test'] = u'中文测试'
+
+            rsp_data['data'] = OrderedDict()
+            rsp_data['data'] = copy.deepcopy(req_data)
     else:
         rsp_data['code'] = '10001'
         rsp_data['mesage'] = 'Upload Error.diviceid error.'
-        rsp_data['data'] = copy.deepcopy(req_data)
         rsp_data['chinese_test'] = u'中文测试'
+
+        rsp_data['data'] = OrderedDict()
+        rsp_data['data'] = copy.deepcopy(req_data)
 
     response_data = json.dumps(rsp_data, ensure_ascii=False, indent=2)
 
@@ -149,9 +156,6 @@ def finger_point_test_file_list(request):
     """
         Finger image test
     """
-
-    rsp_data = OrderedDict()
-    rsp_data['data'] = OrderedDict()
 
     upload_path = os.path.join(u"{}/upload".format(settings.BASE_DIR))
 
