@@ -60,13 +60,16 @@ def finger_point_test_api_01(request):
 
             self_data = copy.deepcopy(req_data)
             del self_data['image']
+            if image_file:
+                self_data['image'] = image_file.name
 
             rsp_data['code'] = '10000'
             rsp_data['mesage'] = u'Upload Success.'
             rsp_data['chinese_test'] = u'中文测试'
+
             rsp_data['data'] = OrderedDict()
-            rsp_data['data'] = self_data
-            rsp_data['data']['file_url'] = u"/media/{}".format(image_file.name)
+            rsp_data['data']['image_url'] = u"/media/{}".format(image_file.name)
+            rsp_data['data']['request_data'] = self_data
 
         else:
 
@@ -113,22 +116,29 @@ def finger_point_test_api_02(request):
             if not os.path.exists(upload_path):
                 os.makedirs(upload_path)
 
-            image_file = req_data['file'] if 'image' in req_data else None
+            image_file = req_data['image'] if 'image' in req_data else None
+
             if image_file:
                 # 打开特定的文件进行二进制的写操作
                 destination = open(u"{}/{}".format(upload_path, image_file.name), 'wb+')
                 for chunk in image_file.chunks():  # 分块写入文件
                     destination.write(chunk)
                 destination.close()
-                rsp_data['data']['file_url'] = u"/media/{}".format(image_file.name)
+
+            self_data = copy.deepcopy(req_data)
+            del self_data['image']
+
+            if image_file:
+                self_data['image'] = image_file.name
 
             rsp_data['code'] = '10000'
             rsp_data['mesage'] = 'Upload Success.'
             rsp_data['chinese_test'] = u'中文测试'
 
             rsp_data['data'] = OrderedDict()
+            rsp_data['data']['image_url'] = u"/media/{}".format(image_file.name)
             rsp_data['data']['request_data'] = dict()
-            rsp_data['data']['request_data'] = copy.deepcopy(req_data)
+            rsp_data['data']['request_data'] = self_data
 
         else:
             rsp_data['code'] = '10001'

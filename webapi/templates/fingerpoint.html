@@ -26,7 +26,23 @@
 </style>
 <body>
     <div id="s-content">
+        <h4>测试接口1</h4>
         <form enctype="multipart/form-data" action="/client/finger_01" method="post">
+            <div>
+                文本：<input id="deviceid" name="deviceid" value="110102006229"/>
+            </div>
+            <div>
+                文件：<input id="image" name="image" type="file"/>
+            </div>
+            <div>
+                <input type="submit" value="提交">
+            </div>
+        </form>
+    </div>
+    <div style="height: 20px;"> </div>
+    <div id="s-content">
+        <h4>测试接口2</h4>
+        <form enctype="multipart/form-data" action="/client/finger_02" method="post">
             <div>
                 文本：<input id="deviceid" name="deviceid" value="110102006229"/>
             </div>
