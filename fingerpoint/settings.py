@@ -150,3 +150,20 @@ REST_FRAMEWORK = {
     # )
 }
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'salary',
+        'USER': 'builder',
+        'PASSWORD': 'ASDasd!@#123',
+        'HOST': '127.0.0.1',
+    },
+    'slave': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'salary',
+        'USER': 'builder',
+        'PASSWORD': 'ASDasd!@#123',
+        'HOST': '127.0.0.1',
+    },
+}
