@@ -177,7 +177,7 @@ def finger_point_test_file_list(request):
     upload_files_list = [
         u"""
             <div>
-                <strong>{0}</strong>. <a href="/media/{1}">{1}</a><br/>
+                <strong>{0}</strong>. <a href="/medias/{1}">{1}</a><br/>
             </div>
         """.format((idex+1), filename) for idex, filename in enumerate(upload_files)]
 
