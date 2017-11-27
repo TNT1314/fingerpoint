@@ -167,7 +167,7 @@ def finger_point_test_file_list(request):
         Finger image test
     """
 
-    upload_path = os.path.join(u"{}/upload".format(settings.BASE_DIR))
+    upload_path = os.path.join(u"{}/uploads".format(settings.BASE_DIR))
 
     if not os.path.exists(upload_path):
         os.makedirs(upload_path)
