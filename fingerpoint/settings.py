@@ -129,9 +129,9 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 # 媒体文件
-MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/medias/'
 
 # rest framework add by wormer time:3017-10-10
 REST_FRAMEWORK = {
